@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "omniauth-mapmyfitness"
   gem.homepage = "http://github.com/yeeland/omniauth-mapmyfitness"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "yeeland@gmail.com"
-  gem.authors = ["Yeeland"]
+  gem.summary = %Q{OmniAuth strategy for MapMyFitness}
+  gem.description = %Q{OmniAuth strategy for authenticating against MapMyFitness's Oauth 1.0 implementation in API3}
+  gem.email = "yeeland.chen@mapmyfitness.com"
+  gem.authors = ["Yeeland Chen"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
