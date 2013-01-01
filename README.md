@@ -59,8 +59,8 @@ Here's an example *Auth Hash* that you will get through `request.env['omniauth.a
     :name => 'Joe Marathon',
     :first_name => 'Joe',
     :last_name => 'Marathon',
-    :image => 'http://api.mapmyfitness.com/3.1/users/get_avatar?uid=1234567',
-    :urls => { :mapmyfitness => 'http://www.mapmyfitness.com/profile/runforthehills' },
+    :image => 'http://api.mapmyfitness.com/3.1/users/get_avatar?uid=1234567890',
+    :urls => { :mapmyfitness => 'http://www.mapmyfitness.com/profile/1234567890' },
     :location => 'Austin, TX'
   },
   :credentials => {
