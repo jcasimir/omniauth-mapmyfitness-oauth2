@@ -6,14 +6,14 @@ describe "OmniauthMapmyfitness" do
   end
 
   it 'has a name' do
-    auth.options.name.should be
+    expect(auth.options.name).to be
   end
 
   [:access_token_path, :authorize_path, :http_method,
    :request_token_path, :scheme, :site].each do |attribute|
 
     it "has the #{attribute} defined" do
-      auth.options.client_options.send(attribute).should be
+      expect(auth.options.client_options.send(attribute)).to be
     end
   end
 
