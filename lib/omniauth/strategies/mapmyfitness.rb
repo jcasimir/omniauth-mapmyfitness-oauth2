@@ -2,18 +2,20 @@ require 'omniauth-oauth'
 
 module OmniAuth
   module Strategies
-    class MapMyFitness < OmniAuth::Strategies::OAuth
-      # Give your strategy a name.
-      option :name, "mapmyfitness"
+    class MapMyFitness < OmniAuth::Strategies::OAuth2
+      option :name, "mapmyfitness-oauth2"
 
-      # This is where you pass the options you would pass when
-      # initializing your consumer from the OAuth gem.
-      option :client_options, {:site => "https://api.mapmyfitness.com",
-                               :authorize_path => "/3.1/oauth/authorize",
-                               :request_token_path => '/3.1/oauth/request_token',
-                               :access_token_path => '/3.1/oauth/access_token',
-                               :scheme => :query_string,
-                               :http_method => :get}
+      # option :client_options, {:site => "https://api.mapmyfitness.com",
+      #                          :authorize_path => "/3.1/oauth/authorize",
+      #                          :request_token_path => '/3.1/oauth/request_token',
+      #                          :access_token_path => '/3.1/oauth/access_token',
+      #                          :scheme => :query_string,
+      #                          :http_method => :get}
+      option :client_options, {
+        :site => "https://www.mapmyfitness.com",
+        :authorize_url => "https://www.mapmyfitness.com/v7.0/oauth2/authorize/",
+        :token_url => "https://oauth2-api.mapmyapi.com/v7.0/oauth2/access_token/"
+      }
 
       # These are called after authentication has succeeded. If
       # possible, you should try to set the UID without making
