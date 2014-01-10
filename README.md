@@ -1,105 +1,46 @@
-# OmniAuth MapMyFitness
+# OmniAuth MapMyFitness OAuth2
 
-This gem contains the MapMyFitness strategy for OmniAuth.
+This gem contains the MapMyFitness strategy for OmniAuth using OAuth2.
 
-MapMyFitness currently uses OAuth 1.0.  For more information about integrating with MapMyFitness, here are a few things to check out:
+## Setup
 
-- Overview: http://www.mapmyfitness.com/developer/
-- Request an API Key: https://www.mapmyfitness.com/developer/api_keys/list/.
-- API 3.1 Docs: http://api.mapmyfitness.com/3.1/
+### Install the Gem
 
-## Before You Begin
+Add the dependency to your application's Gemfile:
 
-This will only be useful if you're using OmniAuth in your app.  Check out https://github.com/intridea/omniauth for more.
-
-## Using This Strategy
-
-First, add this to your `Gemfile`:
-
-```ruby
-gem 'omniauth-mapmyfitness'
+```
+gem 'omniauth-mapmyfitness-oauth2'
 ```
 
-If you need to use the latest HEAD version, you can do so with:
+### Key & Secret Variables
 
-```ruby
-gem 'omniauth-mapmyfitness', :github => 'yeeland/omniauth-mapmyfitness'
+Your secret credentials should be stored in environment variables. You can do this in a your `.bash_profile` with the following:
+
+```plain
+export MMF_API_KEY=your_key_goes_here
+export MMF_API_SECRET=your_secret_goes_here
 ```
 
-Next, configure OmniAuth to use this provider. For a Rails app using only OmniAuth, your `config/initializers/omniauth.rb` file should be something like:
+#### Checking Environment Variables
+
+Once you have those ENV variables set, you can check them from IRB:
+
+```plain
+$ irb
+> ENV['MMF_API_KEY']
+ => "09375ijkds9072l"
+> ENV['MMF_API_SECRET']
+ => "08993mhjd8721lk"
+```
+
+### Create an Initializer
+
+Create a `config/initializers/omniauth.rb` with the following:
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :mapmyfitness, "CONSUMER_KEY", "CONSUMER_SECRET"
+  provider :mapmyfitness, ENV['MMF_API_KEY'], ENV['MMF_API_SECRET']
 end
 ```
 
-## Using This Strategy with Devise
-
-If you are using [Devise with OmniAuth](https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview), your `config/initializers/devise.rb` should look something like:
-
-```ruby
-Devise.setup do |config|
-  # Other config options
-  config.omniauth :mapmyfitness, 'CONSUMER_KEY', 'CONSUMER_SECRET', :strategy_class => OmniAuth::Strategies::MapMyFitness
-end
-```
-
-## Auth Hash
-
-Here's an example *Auth Hash* that you will get through `request.env['omniauth.auth']`:
-
-```ruby
-{
-  :provider => 'mapmyfitness',
-  :uid => '1234567890',
-  :info => {
-    :nickname => 'notarealusername',
-    :email => 'runforthehills@mapmyfitness.com',
-    :name => 'Joe Marathon',
-    :first_name => 'Joe',
-    :last_name => 'Marathon',
-    :image => 'http://api.mapmyfitness.com/3.1/users/get_avatar?uid=1234567890',
-    :urls => { :mapmyfitness => 'http://www.mapmyfitness.com/profile/1234567890' },
-    :location => 'Austin, TX'
-  },
-  :credentials => {
-    :token => 'TOKEN',
-    :secret => 'SECRET',
-    :expires_at => nil,
-    :expires => false
-  },
-  :extra => {
-    :raw_info => {
-      "user_id" => '1234567890',
-      "username" => 'notarealusername',
-      # There is more here. Check out http://api.mapmyfitness.com/3.1/users/get_user?doc for full output.
-    }
-  }
-}
-```
-
-It may be worth noting that the raw_info you get back is rather large and if you are using cookie-based sessions and if you try storing `request.env['omniauth.auth']` in your session as-is, it will likely exceed the maximum session size.
-
-
-
-## A Small Note on Branding
-
-MapMyFitness should be [stylized](http://www.mapmyfitness.com/brand/) as MapMyFitness instead of MapMyFITNESS, Mapmyfitness, Map My Fitness, or any other variations.  To accommodate this, you may want to [configure your Devise views](https://github.com/plataformatec/devise#configuring-views) changing the omniauthable part of your `app/views/devise/_links.erb` from:
-```ruby
-<%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
-```
-to
-```ruby
-<%= link_to "Sign in with #{OmniAuth::Utils.camelize provider.to_s}", omniauth_authorize_path(resource_name, provider) %><br />
-```
-
-## License
-
-Copyright (c) 2012-2013 by MapMyFitness. Originally maintained by Yeeland Chen.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**NOTE**: The `ENV['MMF_API_KEY']` is unsed in an unusual place in this strategy. It *must* be defined for the library to work.

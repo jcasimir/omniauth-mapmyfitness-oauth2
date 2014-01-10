@@ -1,4 +1,5 @@
 require 'omniauth-oauth2'
+require 'pry'
 
 module OmniAuth
   module Strategies
