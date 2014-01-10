@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'omniauth-mapmyfitness/version'
 
 Gem::Specification.new do |spec|
-  spec.name = "omniauth-mapmyfitness"
+  spec.name = "omniauth-mapmyfitness-oauth2"
 
   spec.version       = OmniAuth::MapMyFitness::VERSION
-  spec.authors       = ["Yeeland Chen", "Jeff Casimir"]
-  spec.email         = ["yeeland.chen@mapmyfitness.com", "jeff@casimircreative.com"]
+  spec.authors       = ["Jeff Casimir"]
+  spec.email         = ["jeff@casimircreative.com"]
   spec.description   = "OmniAuth strategy for authenticating against MapMyFitness with OAuth 2"
   spec.summary       = "OmniAuth strategy for MapMyFitness OAuth2"
-  spec.homepage      = "http://github.com/jcasimir/omniauth-mapmyfitness"
+  spec.homepage      = "http://github.com/jcasimir/omniauth-mapmyfitness-oauth2"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
