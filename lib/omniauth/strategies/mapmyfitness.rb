@@ -3,25 +3,21 @@ require 'omniauth-oauth2'
 module OmniAuth
   module Strategies
     class MapMyFitness < OmniAuth::Strategies::OAuth2
-      option :name, "mapmyfitness-oauth2"
+      option :name, "mapmyfitness"
 
-      # option :client_options, {:site => "https://api.mapmyfitness.com",
-      #                          :authorize_path => "/3.1/oauth/authorize",
-      #                          :request_token_path => '/3.1/oauth/request_token',
-      #                          :access_token_path => '/3.1/oauth/access_token',
-      #                          :scheme => :query_string,
-      #                          :http_method => :get}
       option :client_options, {
-        :site => "https://www.mapmyfitness.com",
+        :site => "https://oauth2-api.mapmyapi.com",
         :authorize_url => "https://www.mapmyfitness.com/v7.0/oauth2/authorize/",
-        :token_url => "https://oauth2-api.mapmyapi.com/v7.0/oauth2/access_token/"
+        :token_url => "https://oauth2-api.mapmyapi.com/v7.0/oauth2/access_token/",
+        :connection_opts => {
+          :headers => {'Api-Key' => ENV['MMF_API_KEY']}
+        }
       }
 
-      # These are called after authentication has succeeded. If
-      # possible, you should try to set the UID without making
-      # additional calls (if the user id is returned with the token
-      # or as a URI parameter). This may not be possible with all
-      # providers.
+      option :token_options, {
+        :grant_type => 'authorization_code',
+      }
+
       uid {
         raw_info['user_id']
       }
@@ -34,7 +30,7 @@ module OmniAuth
           :first_name => raw_info['first_name'],
           :last_name => raw_info['last_name'],
           :location => [raw_info['start_city'], raw_info['start_state'], raw_info['start_country']].join(', '),
-          :image => "http://api.mapmyfitness.com/3.1/users/get_avatar?uid=#{raw_info['user_id']}",
+          #:image => "http://api.mapmyfitness.com/3.1/users/get_avatar?uid=#{raw_info['user_id']}",
           :urls => {:mapmyfitness => "http://www.mapmyfitness.com/profile/#{raw_info['username']}"}
         }
       end
@@ -46,7 +42,7 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= MultiJson.decode(access_token.get('/3.1/users/get_user').body)['result']['output']['user']
+        @raw_info = JSON.parse(access_token.get("/v7.0/user/self").body)
       end
     end
   end
