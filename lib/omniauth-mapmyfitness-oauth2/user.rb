@@ -8,7 +8,8 @@ module OmniAuth
          "gender", "_links", "id", "date_joined"]
       end
 
-      attr_reader :data, :token_expires_at, :token_refresh, :token
+      attr_reader :data
+      attr_reader :token_expires_at, :token_refresh, :token, :provider
       attr_reader *data_attributes
 
       def initialize(auth_info)
@@ -24,6 +25,11 @@ module OmniAuth
         @token_expires_at = data["credentials"]["expires_at"]
         @token_refresh = data["credentials"]["refresh_token"]
         @token = data["credentials"]["token"]
+        @provider = data["provider"]
+      end
+
+      def uid
+        id
       end
     end
   end
