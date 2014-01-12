@@ -1,5 +1,4 @@
 require 'omniauth-oauth2'
-require 'omniauth-mapmyfitness-oauth2/user'
 
 module OmniAuth
   module Strategies
